@@ -12,17 +12,17 @@ from datasets import Dataset
 from transformers import AutoTokenizer, Trainer, TrainingArguments
 
 if __package__ is None or __package__ == "":
-    sys.path.append(str(Path(__file__).resolve().parent.parent))
+    sys.path.append(str(Path(__file__).resolve().parent.parent.parent))
 
-from scripts.multitask_token_editor_model import MultiTaskTokenEditor
+from postprocessing.scripts.multitask_token_editor_model import MultiTaskTokenEditor
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--input", type=Path, default=Path("data/processed/multitask-token-edits.jsonl"))
-    parser.add_argument("--metadata", type=Path, default=Path("models/multitask-token-edit-metadata.json"))
+    parser.add_argument("--input", type=Path, default=Path("postprocessing/data/processed/multitask-token-edits.jsonl"))
+    parser.add_argument("--metadata", type=Path, default=Path("postprocessing/models/multitask-token-edit-metadata.json"))
     parser.add_argument("--encoder", default="ytu-ce-cosmos/turkish-mini-bert-uncased")
-    parser.add_argument("--output-dir", type=Path, default=Path("models/turkish-asr-multitask-editor"))
+    parser.add_argument("--output-dir", type=Path, default=Path("postprocessing/models/turkish-asr-multitask-editor"))
     parser.add_argument("--max-steps", type=int, default=-1)
     parser.add_argument("--epochs", type=float, default=3.0)
     parser.add_argument("--max-train-rows", type=int, default=-1)

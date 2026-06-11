@@ -15,8 +15,8 @@ FIELDS = ["id", "input_text", "target_text", "reference_text", "task_type", "sou
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--input", type=Path, default=Path("data/medical_corpus_v3_text_manifest.csv"))
-    parser.add_argument("--output", type=Path, default=Path("data/processed/medical_postprocessor_synthetic.csv"))
+    parser.add_argument("--input", type=Path, default=Path("postprocessing/data/medical_corpus_v3_text_manifest.csv"))
+    parser.add_argument("--output", type=Path, default=Path("postprocessing/data/processed/medical_postprocessor_synthetic.csv"))
     return parser.parse_args()
 
 

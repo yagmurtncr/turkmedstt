@@ -1,89 +1,141 @@
-# Turkish ASR Readability Post-Processor
+# TurkMedSTT
 
-Türkçe ASR çıktılarındaki büyük/küçük harf, noktalama ve güvenilir kelime
-hatalarını düzelten, anlamı korumaya odaklı metin son-işleme projesi.
+TurkMedSTT, Türkçe otomatik konuşma tanıma sistemlerini genel ve tıbbi alanlarda
+inceleyen bir bitirme projesidir. Projede Whisper Large V3 tabanlı iki model
+geliştirilmiş, 20 açık ASR modeli ortak bir değerlendirme protokolüyle
+karşılaştırılmış ve sözcük/karakter hatalarına ek olarak anlamsal korunumu
+inceleyen AcoSemantic değerlendirmesi uygulanmıştır.
+
+## Proje Ekibi
+
+- Muhammed Kumcu - [@muhammedkumcu](https://github.com/muhammedkumcu)
+- Nur Yağmur Tuncer - [@yagmurtuncer](https://github.com/yagmurtuncer)
+
+Danışman: Doç. Dr. Ayşe Berna Altınel Girgin
+
+## Başlıca Çıktılar
+
+- **M1 Genel Türkçe modeli:** Genel Türkçe verileriyle LoRA ince ayarı
+- **M2 Tıbbi Türkçe modeli:** M1 üzerine genel ve tıbbi verilerle ikinci aşama LoRA
+  ince ayarı
+- **medv3 veri kümesi:** 3.236 Türkçe sentetik tıbbi konuşma kaydı
+- **Genel Türkçe benchmark:** 20 model, 1.060 klip ve 21.200 model-klip sonucu
+- **AcoSemantic değerlendirmesi:** ASR çıktılarında anlamsal ve duygusal korunumu
+  inceleyen tamamlayıcı metrikler
+- **ASR okunabilirlik post-processor:** ASR sonrasında casing, noktalama ve
+  güvenilir kelime düzeltmeleri uygulayan V1 General ve V2 Medical modelleri
+- **Demo ve leaderboard:** Modellerin denenebildiği ve sonuçların filtrelenebildiği
+  Hugging Face Space uygulamaları
+
+## Öne Çıkan Sonuçlar
+
+Bağımsız 320 kliplik genel Türkçe değerlendirmesinde M1, temel modele göre WER'i
+0,1213'ten 0,0792'ye, CER'i 0,0546'dan 0,0226'ya düşürmüştür. Bu değerler sırasıyla
+%34,7 WER ve %58,6 CER göreli iyileşmesine karşılık gelir. M2 bu genel dil
+kazanımlarını korumuştur.
+
+Eğitim cümlelerinden farklı 516 gerçek konuşma kaydından oluşan zor tıbbi terim
+testinde M2, üç konuşmacının tamamında temel modelden daha düşük WER üretmiştir.
+Birleştirilmiş eşleştirilmiş bootstrap analizinde M0-M2 WER farkı 0,0203,
+%95 güven aralığı [0,0122; 0,0284] ve p<0,0001'dir.
+
+Ayrıntılı tablolar ve değerlendirme sınırları için [Sonuçlar](docs/RESULTS.md)
+belgesine bakınız.
+
+## Hugging Face Yayınları
+
+- [TurkMedSTT organizasyonu](https://huggingface.co/turkmedstt)
+- [M1 - Genel Türkçe model](https://huggingface.co/turkmedstt/whisper-large-v3-turkish-general)
+- [M2 - Tıbbi Türkçe model](https://huggingface.co/turkmedstt/whisper-large-v3-turkish-medical)
+- [medv3 tıbbi veri kümesi](https://huggingface.co/datasets/turkmedstt/medv3-turkish-medical-asr)
+- [Genel Türkçe benchmark verileri](https://huggingface.co/datasets/turkmedstt/turkish-asr-benchmark)
+- [ASR demo](https://huggingface.co/spaces/turkmedstt/turkmedstt-demo)
+- [İnteraktif leaderboard](https://huggingface.co/spaces/turkmedstt/turkish-asr-leaderboard)
+- [V1 Genel Türkçe post-processor](https://huggingface.co/turkmedstt/turkish-asr-readability-postprocessor-v1)
+- [V2 Sağlık post-processor](https://huggingface.co/turkmedstt/turkish-medical-asr-readability-postprocessor-v2)
+
+Model ağırlıkları, ses kayıtları ve yayımlanmış veri dosyaları GitHub deposunu
+gereksiz büyütmemek için burada tekrar tutulmamaktadır. Bunlara yukarıdaki
+Hugging Face bağlantılarından erişilebilir.
+
+## Depo Yapısı
 
 ```text
-ham ASR çıktısı -> daha okunabilir Türkçe metin
+apps/                 Hugging Face demo ve leaderboard uygulamaları
+configs/              Nihai benchmark model listesi
+docs/figures/         Sistem diyagramları ve temel sonuç grafikleri
+docs/thesis/          Nihai bitirme raporu (DOCX ve PDF)
+docs/presentation/    Proje sunumu (PPTX)
+results/              Benchmark, ince ayar ve gerçek konuşma sonuç özetleri
+scripts/              Veri hazırlama, eğitim, değerlendirme ve yayın betikleri
+postprocessing/       Türkçe ASR okunabilirlik son-işleme modeli ve sonuçları
+static/               Yerel FastAPI arayüzünün statik dosyaları
+turkmed_stt/          Ana Python paketi
 ```
 
-Model serbest metin üretmez. Tek checkpoint içindeki ayrı görev başlıklarıyla
-yalnızca güveni yüksek düzeltmeleri uygular.
+## Okunabilirlik Son-İşleme
 
-## Yayınlanan Modeller
+`postprocessing/` modülü, ham ASR çıktısını serbestçe yeniden yazmadan daha
+okunabilir hale getiren tek-checkpoint çok görevli token editörünü içerir.
 
-| Model | Kullanım alanı | WER | CER | İyileşen / kötüleşen |
-| --- | --- | ---: | ---: | ---: |
-| [V1 General](https://huggingface.co/turkmedstt/turkish-asr-readability-postprocessor-v1) | Genel Türkçe ASR | `0.06179 -> 0.04277` | `0.00940 -> 0.00631` | `222 / 5` |
-| [V2 Medical](https://huggingface.co/turkmedstt/turkish-medical-asr-readability-postprocessor-v2) | Sağlık alanı uyarlaması | `0.31106 -> 0.18352` | `0.05491 -> 0.03547` | `127 / 0` |
+Genel Türkçe V1, test WER değerini `0.06179` seviyesinden `0.04277` seviyesine
+düşürmüştür. Sağlık alanı V2 kontrollü sağlık metni bozulmalarında WER değerini
+`0.31106` seviyesinden `0.18352` seviyesine düşürmüştür. V2 henüz gerçek sağlık
+ASR çıktıları üzerinde doğrulanmamıştır.
 
-Her iki değerlendirmede de zaten doğru olan girdilerden bozulan satır sayısı
-`0` olmuştur.
+Ayrıntılar için [post-processing README](postprocessing/README.md) ve
+[nihai sonuçlar](postprocessing/reports/RESULTS.md) dosyalarına bakınız.
 
-**Önerilen genel model:** V1 General.
+## Yerel Kurulum
 
-V2 Medical kontrollü sağlık metni bozulmalarıyla eğitilip değerlendirilmiştir.
-Gerçek sağlık seslerinden üretilmiş ASR çıktıları üzerinde henüz
-doğrulanmamıştır ve klinik kararlar için kullanılmamalıdır.
-
-## Mimari
-
-Model, `ytu-ce-cosmos/turkish-mini-bert-uncased` encoderı üzerine kurulu yaklaşık
-11,6 milyon parametreli çok görevli token editörüdür:
-
-- büyük/küçük harf düzeltme;
-- noktalama düzenleme;
-- sınırlandırılmış, yüksek güvenli kelime değiştirme.
-
-Bu yaklaşım yanlış içerik ekleme ve anlam değiştirme riskini azaltır. Ses
-bilgisinde kaybolan kelimeleri geri getiremez ve ağır bozulmuş transkriptleri
-tamamen düzeltemez.
-
-## Kullanım
-
-Model ağırlıkları ve kullanıma hazır `inference.py` dosyaları Hugging Face model
-sayfalarında bulunmaktadır:
+Python 3.9 veya daha yeni bir sürüm önerilir. GPU ile değerlendirme ve eğitim
+için CUDA uyumlu PyTorch kurulumu gereklidir.
 
 ```powershell
-pip install torch transformers
-python inference.py "bugün hava çok güzel dışarı çıkalım"
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+pip install -r requirements.txt
 ```
 
-Beklenen çıktı biçimi:
+Yerel FastAPI uygulaması:
 
-```text
-Bugün hava çok güzel dışarı çıkalım.
+```powershell
+uvicorn turkmed_stt.app:app --reload
 ```
 
-## Kaynak Kod
+Hugging Face demo uygulaması:
 
-| Dosya | Açıklama |
-| --- | --- |
-| `scripts/multitask_token_editor_model.py` | Çok görevli model mimarisi |
-| `scripts/build_multitask_token_edit_dataset.py` | Eğitim etiketi oluşturma |
-| `scripts/train_multitask_token_editor.py` | Model eğitimi |
-| `scripts/infer_multitask_token_editor.py` | Yerel çıkarım |
-| `scripts/evaluate_multitask_token_editor.py` | Kör değerlendirme |
-| `scripts/analyze_multitask_token_editor.py` | Threshold ve hata analizi |
-| `scripts/build_medical_synthetic_pairs.py` | Kontrollü sağlık verisi üretimi |
+```powershell
+pip install -r apps/demo/requirements.txt
+python apps/demo/app.py
+```
 
-## Sonuçlar
+Benchmark betikleri yerel ses dosyalarını içeren bir manifest bekler. Sesler bu
+depoda bulunmadığından manifest yollarının kullanıcının veri konumuna göre
+ayarlanması gerekir. Komut örnekleri ve yöntem notları
+[Yeniden Üretim](docs/REPRODUCIBILITY.md) belgesindedir.
 
-Kabul edilen modellerin sonuçları ve temel sınırlamaları
-[reports/RESULTS.md](reports/RESULTS.md) dosyasında özetlenmiştir.
+## Depoya Dahil Edilmeyenler
 
-Büyük veri setleri, ses dosyaları, model ağırlıkları, checkpointler, geçici
-çıktılar ve başarısız deneyler bu temiz GitHub yayınında tutulmamaktadır.
+- Ham ve işlenmiş ses kayıtları
+- Whisper temel modeli, LoRA adapterleri ve birleştirilmiş model ağırlıkları
+- Kişisel bilgiler, erişim anahtarları ve yerel makineye özgü dosyalar
+- Ara raporlar, geçici deney çıktıları, önbellekler ve yinelenen belgeler
 
-## Sınırlamalar
+## Etik ve Kullanım Sınırı
 
-- Gerçek kelime tanıma hatalarında düzeltme kapsamı halen sınırlıdır.
-- Kişi, yer ve alan terimleri ek doğrulama gerektirir.
-- V2 Medical gerçek sağlık ASR verisiyle doğrulanmamıştır.
-- Yüksek riskli kullanımlarda insan kontrolü gereklidir.
+Bu çalışma araştırma ve eğitim amaçlıdır. Modeller tıbbi cihaz değildir; klinik
+karar verme, tanı veya tedavi amacıyla doğrulanmadan kullanılmamalıdır. ASR
+çıktıları özellikle ilaç adı, doz, sayı ve özel tıbbi terimler bakımından insan
+tarafından kontrol edilmelidir.
 
-## Lisans
+## Lisans ve Atıf
 
-Eğitim sürecinde farklı lisanslara sahip veri kaynakları kullanılmıştır.
-Yeniden dağıtım veya ticari kullanım öncesinde kaynak veri lisansları ve
-Hugging Face model kartları incelenmelidir.
+Kaynak kod MIT License ile sunulmaktadır. Model ve veri kümelerinin
+lisansları ilgili Hugging Face sayfalarında belirtilmiştir. Akademik kullanımda
+[`CITATION.cff`](CITATION.cff) dosyasındaki bilgileri kullanınız.
+
+Bu birleşik depo, temel TurkMedSTT çalışmasını
+[`muhammedkumcu/turkmedstt`](https://github.com/muhammedkumcu/turkmedstt)
+deposundan koruyarak okunabilirlik post-processing modülüyle genişletir.

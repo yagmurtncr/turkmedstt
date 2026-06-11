@@ -19,10 +19,10 @@ EDIT_LABELS = ["KEEP", "REPLACE"]
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--input", type=Path, default=Path("data/processed/readable_asr_dataset_augmented.csv"))
-    parser.add_argument("--output", type=Path, default=Path("data/processed/multitask-token-edits.jsonl"))
-    parser.add_argument("--metadata", type=Path, default=Path("models/multitask-token-edit-metadata.json"))
-    parser.add_argument("--report", type=Path, default=Path("reports/multitask_token_edit_dataset.json"))
+    parser.add_argument("--input", type=Path, default=Path("postprocessing/data/processed/readable_asr_dataset_augmented.csv"))
+    parser.add_argument("--output", type=Path, default=Path("postprocessing/data/processed/multitask-token-edits.jsonl"))
+    parser.add_argument("--metadata", type=Path, default=Path("postprocessing/models/multitask-token-edit-metadata.json"))
+    parser.add_argument("--report", type=Path, default=Path("postprocessing/reports/multitask_token_edit_dataset.json"))
     parser.add_argument("--min-replacement-count", type=int, default=20)
     return parser.parse_args()
 

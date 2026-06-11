@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TurkMed STT Studio</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header>
+        <div>
+          <h1>TurkMed STT Studio</h1>
+          <p>Türkçe tıbbi konuşma tanıma, benchmark ve pilot adaptasyon demosu.</p>
+        </div>
+      </header>
+
+      <section class="panel">
+        <h2>Ses Yükle</h2>
+        <form id="transcribeForm">
+          <label>
+            Ses dosyası
+            <input name="file" type="file" accept="audio/*" required />
+          </label>
+          <div class="grid">
+            <label>
+              Backend
+              <select name="backend">
+                <option value="openai-whisper">openai-whisper</option>
+                <option value="transformers">transformers</option>
+              </select>
+            </label>
+            <label>
+              Model
+              <input name="model_name" value="small" />
+            </label>
+          </div>
+          <label>
+            Referans metin (opsiyonel, WER/CER/DS-WER için)
+            <textarea name="reference_text" rows="4"></textarea>
+          </label>
+          <button type="submit">Transkripsiyon Al</button>
+        </form>
+      </section>
+
+      <section class="panel">
+        <h2>Sonuç</h2>
+        <div id="status">Henüz analiz yok.</div>
+        <pre id="output"></pre>
+      </section>
+    </main>
+    <script src="/static/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "base_model": "openai/whisper-large-v3",
+  "mode": "general",
+  "general_manifest": "/content/ft_data_140/train_140h_colab_manifest.csv",
+  "medical_upsample": 0,
+  "lora_r": 64,
+  "lora_alpha": 128,
+  "lora_target": "q_proj,v_proj",
+  "training_rows": 118257,
+  "budget": "epochs=1.0",
+  "elapsed_minutes": 124.4,
+  "output_dir": "/content/drive/MyDrive/turkmedSTT/runs/m1_general_full_r64",
+  "completed_at": "2026-06-09 13:53"
+}

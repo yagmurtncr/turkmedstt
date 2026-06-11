@@ -1,0 +1,15 @@
+{
+  "base_model": "openai/whisper-large-v3",
+  "adapter_dir": "/content/drive/MyDrive/turkmedSTT/runs/m1_general_full_r64",
+  "manifest": "/content/drive/MyDrive/turkmedSTT/evidence/benchmark_eval_pack/benchmark_eval_manifest.csv",
+  "split": "all",
+  "rows": 652,
+  "mean_wer": 0.0638670401623056,
+  "mean_cer": 0.014839054228216863,
+  "mean_ds_wer": 0.15064102564102563,
+  "mean_rtf": 0.12175146398217034,
+  "medical_ref_terms_total": 68,
+  "medical_hit_terms_total": 56,
+  "medical_term_recall": 0.8235294117647058,
+  "total_runtime_seconds": 557.7143299109994
+}

@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "turkmed-stt"
+version = "0.1.0"
+description = "TurkMedSTT — Turkish Medical Speech Recognition"
+requires-python = ">=3.9"
+dependencies = [
+    "transformers>=4.40.0",
+    "torch>=2.0",
+    "soundfile",
+    "jiwer",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["turkmed_stt*", "postprocessing*"]

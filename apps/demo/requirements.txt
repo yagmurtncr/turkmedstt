@@ -1,0 +1,6 @@
+transformers==4.46.3
+torch
+accelerate
+librosa
+soundfile
+gradio>=4.0

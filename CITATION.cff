@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "Bu projeyi akademik çalışmanızda kullanıyorsanız lütfen aşağıdaki künyeyi kullanın."
+title: "TurkMedSTT: Türkçe Genel ve Tıbbi Otomatik Konuşma Tanıma"
+type: software
+authors:
+  - family-names: Kumcu
+    given-names: Muhammed
+    orcid: ""
+  - family-names: Tuncer
+    given-names: Nur Yağmur
+version: 1.0.0
+date-released: 2026-06-11
+url: "https://github.com/muhammedkumcu/turkmedstt"
+repository-code: "https://github.com/muhammedkumcu/turkmedstt"
+keywords:
+  - automatic speech recognition
+  - Turkish
+  - medical speech
+  - Whisper
+  - LoRA
+  - AcoSemantic
+license: MIT

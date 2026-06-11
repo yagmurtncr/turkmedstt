@@ -1,33 +1,56 @@
-.venv/
+# Python
 __pycache__/
 *.py[cod]
-*.log
-*.pid
-*.tmp
-.env
-.env.*
-!.env.example
+*.egg-info/
 .pytest_cache/
-.ipynb_checkpoints/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
 
-# Local datasets and audio are not redistributed through GitHub.
-data/
-audits/
-scripts/data/
-
-# Runtime status and temporary transcription outputs.
-*.progress.json
-
-# Local training checkpoints and exported models.
-models/
+# Runtime output
+runs/
+uploads/
+outputs/
 checkpoints/
-*.bin
+wandb/
+logs/
+*.log
+postprocessing/data/
+postprocessing/models/
+postprocessing/audits/
+
+# Models and large data
+*.safetensors
+*.ckpt
 *.pt
 *.pth
-*.safetensors
+*.onnx
+*.bin
+*.wav
+*.mp3
+*.flac
+*.m4a
+*.ogg
+*.opus
+*.zip
+*.7z
+*.tar
+*.tar.gz
+*.parquet
+*.arrow
 
-# Prepared Hugging Face upload directories are generated on E:.
-hf_release/
+# Secrets and local configuration
+.env
+.env.*
+*.pem
+*.key
+id_rsa*
+id_ed25519*
 
-# Clean GitHub publication staging directory.
-.github-release/
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+~$*

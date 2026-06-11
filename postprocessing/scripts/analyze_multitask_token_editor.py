@@ -15,11 +15,11 @@ import torch
 from transformers import AutoTokenizer
 
 if __package__ is None or __package__ == "":
-    sys.path.append(str(Path(__file__).resolve().parent.parent))
+    sys.path.append(str(Path(__file__).resolve().parent.parent.parent))
 
-from scripts.evaluate_multitask_token_editor import PUNCT, apply
-from scripts.multitask_token_editor_model import MultiTaskTokenEditor
-from scripts.speech_shared import char_error_rate, clean_text, word_error_rate
+from postprocessing.scripts.evaluate_multitask_token_editor import PUNCT, apply
+from postprocessing.scripts.multitask_token_editor_model import MultiTaskTokenEditor
+from postprocessing.scripts.speech_shared import char_error_rate, clean_text, word_error_rate
 
 WORD_PATTERN = re.compile(r"\w+", flags=re.UNICODE)
 PUNCTUATION_PATTERN = re.compile(r"[,.;:!?…]")
@@ -28,10 +28,10 @@ MARKS = [",", ".", "?", "!", ";", ":", "…"]
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--input", type=Path, default=Path("data/processed/readable_asr_dataset.csv"))
-    parser.add_argument("--model", type=Path, default=Path("models/turkish-asr-multitask-editor"))
-    parser.add_argument("--output", type=Path, default=Path("reports/multitask_token_editor_v3_analysis.json"))
-    parser.add_argument("--regressions-output", type=Path, default=Path("audits/multitask_token_editor_v3_regressions.csv"))
+    parser.add_argument("--input", type=Path, default=Path("postprocessing/data/processed/readable_asr_dataset.csv"))
+    parser.add_argument("--model", type=Path, default=Path("postprocessing/models/turkish-asr-multitask-editor"))
+    parser.add_argument("--output", type=Path, default=Path("postprocessing/reports/multitask_token_editor_analysis.json"))
+    parser.add_argument("--regressions-output", type=Path, default=Path("postprocessing/audits/multitask_token_editor_regressions.csv"))
     parser.add_argument("--task-type", default="asr_readability_projection")
     return parser.parse_args()
 

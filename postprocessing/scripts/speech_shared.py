@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
 
-from scripts.source_specs import MANIFEST_COLUMNS
+from postprocessing.scripts.source_specs import MANIFEST_COLUMNS
 
 FINAL_COLUMNS = [
     "id",

@@ -12,10 +12,10 @@ import torch
 from transformers import AutoTokenizer
 
 if __package__ is None or __package__ == "":
-    sys.path.append(str(Path(__file__).resolve().parent.parent))
+    sys.path.append(str(Path(__file__).resolve().parent.parent.parent))
 
 try:
-    from scripts.multitask_token_editor_model import MultiTaskTokenEditor
+    from postprocessing.scripts.multitask_token_editor_model import MultiTaskTokenEditor
 except ModuleNotFoundError:
     from multitask_token_editor_model import MultiTaskTokenEditor
 
@@ -28,7 +28,7 @@ EXPLICIT_PUNCT = {f"SET_{label}": mark for label, mark in PUNCT.items() if label
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("text")
-    parser.add_argument("--model", type=Path, default=Path("models/turkish-asr-multitask-editor"))
+    parser.add_argument("--model", type=Path, default=Path("postprocessing/models/turkish-asr-multitask-editor"))
     parser.add_argument("--case-threshold", type=float, default=0.75)
     parser.add_argument("--punct-threshold", type=float, default=0.90)
     parser.add_argument("--edit-threshold", type=float, default=0.95)
