@@ -1,0 +1,36 @@
+{
+  "v1_general": {
+    "status": "accepted",
+    "model_repository": "https://huggingface.co/turkmedstt/turkish-asr-readability-postprocessor-v1",
+    "package": "turkish-asr-postprocessor-v1-general.zip",
+    "sha256": "053418511BC825EFDC7B4DE288EBCC6CB79E70DC2107CA23C610015AB16138D0",
+    "test_wer": 0.04277210562442931,
+    "test_cer": 0.006308843343977145,
+    "improved": 222,
+    "worsened": 5,
+    "correct_input_corrupted": 0,
+    "profile": "balanced"
+  },
+  "v1_explicit_action_experiment": {
+    "status": "rejected_for_general_release",
+    "reason": "Did not beat accepted V1 and corrupted one already-correct input.",
+    "test_wer": 0.04289783907827307,
+    "test_cer": 0.006329401177703555,
+    "improved": 225,
+    "worsened": 6,
+    "correct_input_corrupted": 1
+  },
+  "v2_medical_synthetic": {
+    "status": "accepted_as_synthetic_domain_candidate",
+    "model_repository": "https://huggingface.co/turkmedstt/turkish-medical-asr-readability-postprocessor-v2",
+    "package": "turkish-asr-postprocessor-v2-medical-synthetic.zip",
+    "sha256": "E2B2A326E46BC6C0506993077FDE3CC16D0F395B3AB284199E865E60FA3FAB03",
+    "synthetic_medical_test_wer": 0.18352122754696268,
+    "synthetic_medical_baseline_wer": 0.31105990618858287,
+    "synthetic_medical_improved": 127,
+    "synthetic_medical_worsened": 0,
+    "general_test_wer": 0.0432812068856459,
+    "general_test_correct_input_corrupted": 0,
+    "limitation": "Not validated on real medical ASR because manifest WAV files are unavailable."
+  }
+}

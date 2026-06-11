@@ -1,0 +1,33 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.log
+*.pid
+*.tmp
+.env
+.env.*
+!.env.example
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Local datasets and audio are not redistributed through GitHub.
+data/
+audits/
+scripts/data/
+
+# Runtime status and temporary transcription outputs.
+*.progress.json
+
+# Local training checkpoints and exported models.
+models/
+checkpoints/
+*.bin
+*.pt
+*.pth
+*.safetensors
+
+# Prepared Hugging Face upload directories are generated on E:.
+hf_release/
+
+# Clean GitHub publication staging directory.
+.github-release/
