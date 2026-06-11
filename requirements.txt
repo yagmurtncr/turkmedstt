@@ -1,12 +1,4 @@
 datasets>=4.0.0
-huggingface_hub>=0.34.0
-pyarrow>=24.0.0
 torch>=2.4.0
-torchaudio>=2.4.0
 transformers>=4.48.0
 accelerate>=1.0.0
-sentencepiece>=0.2.0
-protobuf>=5.0.0
-scikit-learn>=1.5.0
-joblib>=1.4.0
-rapidfuzz==3.14.3

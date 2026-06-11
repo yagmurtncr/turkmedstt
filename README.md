@@ -1,86 +1,89 @@
 # Turkish ASR Readability Post-Processor
 
-A conservative, text-only post-processor for improving Turkish ASR
-transcripts. The model applies casing, punctuation, and selected
-high-confidence lexical corrections without freely generating transcript
-content.
+Türkçe ASR çıktılarındaki büyük/küçük harf, noktalama ve güvenilir kelime
+hatalarını düzelten, anlamı korumaya odaklı metin son-işleme projesi.
 
 ```text
-raw Turkish ASR transcript -> safer, more readable Turkish text
+ham ASR çıktısı -> daha okunabilir Türkçe metin
 ```
 
-## Models
+Model serbest metin üretmez. Tek checkpoint içindeki ayrı görev başlıklarıyla
+yalnızca güveni yüksek düzeltmeleri uygular.
 
-| Release | Scope | WER | Correct inputs corrupted |
-| --- | --- | ---: | ---: |
-| [V1 General](https://huggingface.co/turkmedstt/turkish-asr-readability-postprocessor-v1) | General Turkish ASR | `0.06179 -> 0.04277` | `0` |
-| [V2 Medical](https://huggingface.co/turkmedstt/turkish-medical-asr-readability-postprocessor-v2) | Medical-domain adaptation | `0.31106 -> 0.18352` | `0` |
+## Yayınlanan Modeller
 
-V1 General is the recommended release for general Turkish. V2 Medical was
-trained and evaluated with controlled medical-text corruptions. It has not yet
-been validated on real medical ASR audio and must not be treated as clinically
-validated.
+| Model | Kullanım alanı | WER | CER | İyileşen / kötüleşen |
+| --- | --- | ---: | ---: | ---: |
+| [V1 General](https://huggingface.co/turkmedstt/turkish-asr-readability-postprocessor-v1) | Genel Türkçe ASR | `0.06179 -> 0.04277` | `0.00940 -> 0.00631` | `222 / 5` |
+| [V2 Medical](https://huggingface.co/turkmedstt/turkish-medical-asr-readability-postprocessor-v2) | Sağlık alanı uyarlaması | `0.31106 -> 0.18352` | `0.05491 -> 0.03547` | `127 / 0` |
 
-## Architecture
+Her iki değerlendirmede de zaten doğru olan girdilerden bozulan satır sayısı
+`0` olmuştur.
 
-The accepted model is a single-checkpoint multi-head token editor built on
-[`ytu-ce-cosmos/turkish-mini-bert-uncased`](https://huggingface.co/ytu-ce-cosmos/turkish-mini-bert-uncased).
-It predicts:
+**Önerilen genel model:** V1 General.
 
-- casing actions;
-- punctuation actions;
-- constrained lexical replacements.
+V2 Medical kontrollü sağlık metni bozulmalarıyla eğitilip değerlendirilmiştir.
+Gerçek sağlık seslerinden üretilmiş ASR çıktıları üzerinde henüz
+doğrulanmamıştır ve klinik kararlar için kullanılmamalıdır.
 
-This design prioritizes meaning preservation and low regression risk. It
-cannot recover words missing from the audio or reliably repair severely
-corrupted transcripts.
+## Mimari
 
-## Quick Start
+Model, `ytu-ce-cosmos/turkish-mini-bert-uncased` encoderı üzerine kurulu yaklaşık
+11,6 milyon parametreli çok görevli token editörüdür:
 
-Install the dependencies:
+- büyük/küçük harf düzeltme;
+- noktalama düzenleme;
+- sınırlandırılmış, yüksek güvenli kelime değiştirme.
 
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-```
+Bu yaklaşım yanlış içerik ekleme ve anlam değiştirme riskini azaltır. Ses
+bilgisinde kaybolan kelimeleri geri getiremez ve ağır bozulmuş transkriptleri
+tamamen düzeltemez.
 
-Download either Hugging Face model repository and run its bundled inference
-script:
+## Kullanım
+
+Model ağırlıkları ve kullanıma hazır `inference.py` dosyaları Hugging Face model
+sayfalarında bulunmaktadır:
 
 ```powershell
+pip install torch transformers
 python inference.py "bugün hava çok güzel dışarı çıkalım"
 ```
 
-Expected output style:
+Beklenen çıktı biçimi:
 
 ```text
 Bugün hava çok güzel dışarı çıkalım.
 ```
 
-## Repository Contents
+## Kaynak Kod
 
-- `scripts/`: dataset preparation, training, inference, and evaluation code
-- `huggingface/`: model-card and custom-inference release templates
-- `reports/V1_V2_FINAL_RESULTS.md`: complete Turkish technical report
-- `reports/release_manifest.json`: accepted release metrics and checksums
-- `docs/HUGGINGFACE_RELEASE.md`: release and validation procedure
+| Dosya | Açıklama |
+| --- | --- |
+| `scripts/multitask_token_editor_model.py` | Çok görevli model mimarisi |
+| `scripts/build_multitask_token_edit_dataset.py` | Eğitim etiketi oluşturma |
+| `scripts/train_multitask_token_editor.py` | Model eğitimi |
+| `scripts/infer_multitask_token_editor.py` | Yerel çıkarım |
+| `scripts/evaluate_multitask_token_editor.py` | Kör değerlendirme |
+| `scripts/analyze_multitask_token_editor.py` | Threshold ve hata analizi |
+| `scripts/build_medical_synthetic_pairs.py` | Kontrollü sağlık verisi üretimi |
 
-Large datasets, audio, model weights, checkpoints, audit queues, and local
-runtime artifacts are intentionally excluded from GitHub. Released weights are
-available from the Hugging Face model links above.
+## Sonuçlar
 
-## Results And Limitations
+Kabul edilen modellerin sonuçları ve temel sınırlamaları
+[reports/RESULTS.md](reports/RESULTS.md) dosyasında özetlenmiştir.
 
-The full methodology, rejected experiments, evaluation protocol, and
-limitations are documented in
-[reports/V1_V2_FINAL_RESULTS.md](reports/V1_V2_FINAL_RESULTS.md).
+Büyük veri setleri, ses dosyaları, model ağırlıkları, checkpointler, geçici
+çıktılar ve başarısız deneyler bu temiz GitHub yayınında tutulmamaktadır.
 
-The largest remaining limitation is low coverage for genuine lexical ASR
-errors. Improving it requires human-corrected real ASR output/target pairs.
+## Sınırlamalar
 
-## License Note
+- Gerçek kelime tanıma hatalarında düzeltme kapsamı halen sınırlıdır.
+- Kişi, yer ve alan terimleri ek doğrulama gerektirir.
+- V2 Medical gerçek sağlık ASR verisiyle doğrulanmamıştır.
+- Yüksek riskli kullanımlarda insan kontrolü gereklidir.
 
-The training process used multiple sources with per-row license metadata. A
-consolidated release license has not yet been selected. Review source licenses
-and model cards before redistribution or commercial use.
+## Lisans
+
+Eğitim sürecinde farklı lisanslara sahip veri kaynakları kullanılmıştır.
+Yeniden dağıtım veya ticari kullanım öncesinde kaynak veri lisansları ve
+Hugging Face model kartları incelenmelidir.
