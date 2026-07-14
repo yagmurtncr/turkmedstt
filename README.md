@@ -1,5 +1,17 @@
 # TurkMedSTT
 
+<p>
+  <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT" />
+  <img src="https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white" alt="Python 3.9+" />
+  <img src="https://img.shields.io/badge/Model-Whisper%20Large%20V3-EE4C2C?logo=pytorch&logoColor=white" alt="Whisper Large V3" />
+  <a href="https://huggingface.co/turkmedstt"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-turkmedstt-FFD21E" alt="Hugging Face" /></a>
+</p>
+
+> **Turkish general & medical automatic speech recognition (ASR).** Two Whisper Large V3
+> models fine-tuned with LoRA, a 20-model benchmark under a shared evaluation protocol,
+> an AcoSemantic semantic-preservation metric, and an ASR readability post-processor.
+> *Full documentation below is in Turkish (graduation thesis).*
+
 TurkMedSTT, Türkçe otomatik konuşma tanıma sistemlerini genel ve tıbbi alanlarda
 inceleyen bir bitirme projesidir. Projede Whisper Large V3 tabanlı iki model
 geliştirilmiş, 20 açık ASR modeli ortak bir değerlendirme protokolüyle
@@ -9,7 +21,7 @@ inceleyen AcoSemantic değerlendirmesi uygulanmıştır.
 ## Proje Ekibi
 
 - Muhammed Kumcu - [@muhammedkumcu](https://github.com/muhammedkumcu)
-- Nur Yağmur Tuncer - [@yagmurtuncer](https://github.com/yagmurtuncer)
+- Nur Yağmur Tuncer - [@yagmurtncr](https://github.com/yagmurtncr)
 
 Danışman: Doç. Dr. Ayşe Berna Altınel Girgin
 

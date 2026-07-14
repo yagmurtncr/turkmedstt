@@ -5,7 +5,7 @@
 - **Muhammed Kumcu** ([@muhammedkumcu](https://github.com/muhammedkumcu)):
   veri hazırlama, deney tasarımı, model eğitimi, değerlendirme, uygulama
   geliştirme, açık kaynak yayınları ve raporlama.
-- **Nur Yağmur Tuncer** ([@yagmurtuncer](https://github.com/yagmurtuncer)):
+- **Nur Yağmur Tuncer** ([@yagmurtncr](https://github.com/yagmurtncr)):
   veri hazırlama, deney tasarımı, kayıt ve değerlendirme süreçleri, sonuçların
   incelenmesi, açık kaynak yayınları ve raporlama.
 
