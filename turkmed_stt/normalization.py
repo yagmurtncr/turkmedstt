@@ -3,7 +3,6 @@ from __future__ import annotations
 import re
 import unicodedata
 
-
 _PUNCT_RE = re.compile(r"[^\w\sçğıöşüÇĞİÖŞÜ'/-]", re.UNICODE)
 _SPACE_RE = re.compile(r"\s+")
 

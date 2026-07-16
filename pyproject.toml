@@ -17,3 +17,17 @@ dependencies = [
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["turkmed_stt*", "postprocessing*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+# Pyflakes + import order as the CI gate on this research codebase.
+select = ["F", "I"]
+ignore = ["F401", "E402"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+pythonpath = ["."]

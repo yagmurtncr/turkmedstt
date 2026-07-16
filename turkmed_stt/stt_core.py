@@ -1,12 +1,11 @@
 from __future__ import annotations
 
 import time
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
 from .audio import ensure_wav_16k_mono, wav_duration_seconds
-
 
 _MODEL_CACHE: dict[tuple[str, str], Any] = {}
 
@@ -118,8 +117,8 @@ def _load_ctc_processor(model_name: str):
 
 def _transcribe_transformers(path: Path, model_name: str, language: str, prompt: str | None, backend: str) -> dict:
     try:
-        import torch
         import soundfile as sf
+        import torch
         from transformers import AutoModelForCTC, AutoModelForSpeechSeq2Seq, AutoProcessor
     except ImportError as exc:
         raise RuntimeError("transformers/torch kurulu değil. requirements.txt kurulumunu yap.") from exc
@@ -258,9 +257,10 @@ def _transcribe_qwen_asr(path: Path, model_name: str, language: str) -> dict:
     except ImportError:
         pass
     try:
-        import torch
         import soundfile as sf
-        from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline as hf_pipeline
+        import torch
+        from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor
+        from transformers import pipeline as hf_pipeline
     except ImportError as exc:
         raise RuntimeError("qwen-asr and transformers are both unavailable.") from exc
     device = "cuda" if torch.cuda.is_available() else "cpu"

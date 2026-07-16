@@ -14,7 +14,6 @@ from .metrics import score_pair
 from .reports import render_run_markdown
 from .stt_core import transcribe_audio
 
-
 BASE_DIR = Path(__file__).resolve().parents[1]
 STATIC_DIR = BASE_DIR / "static"
 RUNS_DIR = BASE_DIR / "runs"

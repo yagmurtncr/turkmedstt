@@ -77,7 +77,8 @@ def parse_args():
 
 # ── Install dependencies ──────────────────────────────────────────────────────
 def ensure_deps():
-    import subprocess, sys
+    import subprocess
+    import sys
     pkgs = ["peft>=0.10.0", "evaluate", "jiwer", "soundfile", "librosa"]
     for pkg in pkgs:
         try:
@@ -194,8 +195,8 @@ def main():
         print(f"GPU: {torch.cuda.get_device_name(0)}")
 
     # Load model + processor
+    from peft import LoraConfig, TaskType, get_peft_model
     from transformers import WhisperForConditionalGeneration, WhisperProcessor
-    from peft import LoraConfig, get_peft_model, TaskType
 
     print(f"\nLoading {args.model}...")
     processor = WhisperProcessor.from_pretrained(args.model, language="tr", task="transcribe")
@@ -225,10 +226,9 @@ def main():
     train_rows = build_training_rows(args)
 
     # HuggingFace Dataset
-    import numpy as np
-    from datasets import Dataset, Audio
-
     import librosa
+    import numpy as np
+    from datasets import Audio, Dataset
 
     # LAZY feature extraction (set_transform): ham sesi RAM'de BİRİKTİRME.
     # Eski yöntem (tüm klipleri listeye yükle + Dataset.from_list + map) 140h'te
@@ -309,7 +309,7 @@ def main():
     )
 
     budget = f"max_steps={args.max_steps}" if use_steps else f"epochs={args.num_epochs}"
-    print(f"\n=== Starting LoRA training ===")
+    print("\n=== Starting LoRA training ===")
     print(f"  Mode:         {args.mode}")
     print(f"  Model:        {args.model}")
     print(f"  LoRA:         r={args.lora_r}, alpha={args.lora_alpha}, "
@@ -348,13 +348,13 @@ def main():
 
     print(f"\n=== Training complete in {elapsed/60:.1f} min ===")
     print(f"Adapter saved to: {output_dir}")
-    print(f"\nNext step — run evaluation:")
-    print(f"  python3 scripts/evaluate_lora_adapter.py \\")
-    print(f"    --manifest evidence/eval_packs/combined_full_eval/manifest_colab.csv \\")
+    print("\nNext step — run evaluation:")
+    print("  python3 scripts/evaluate_lora_adapter.py \\")
+    print("    --manifest evidence/eval_packs/combined_full_eval/manifest_colab.csv \\")
     print(f"    --base-model {args.model} \\")
     print(f"    --adapter-dir {output_dir} \\")
-    print(f"    --output-dir evidence/benchmark_runs/lora_post_general \\")
-    print(f"    --split all --limit 200")
+    print("    --output-dir evidence/benchmark_runs/lora_post_general \\")
+    print("    --split all --limit 200")
 
 
 if __name__ == "__main__":

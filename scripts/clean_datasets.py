@@ -7,7 +7,18 @@ Reads raw datasets, applies all rules from cleaning_policy.md, outputs:
   data/cleaned/combined_manifest.csv           (all three unified)
   evidence/dataset_quality/before_after_final.csv
 """
-import csv, json, os, pathlib, wave, random, re, collections, struct, math, subprocess, shutil
+import collections
+import csv
+import json
+import math
+import os
+import pathlib
+import random
+import re
+import shutil
+import struct
+import subprocess
+import wave
 from datetime import datetime
 
 REPO        = pathlib.Path(__file__).resolve().parents[1]
@@ -357,7 +368,7 @@ with ba_path.open("w", newline="", encoding="utf-8") as f:
     w = csv.DictWriter(f, fieldnames=list(ba_rows[0].keys()))
     w.writeheader(); w.writerows(ba_rows)
 
-log(f"\n=== BEFORE / AFTER ===")
+log("\n=== BEFORE / AFTER ===")
 log(f"{'Dataset':22s} {'Before':>8} {'After':>8} {'Removed':>8} {'Pct':>6}")
 log("-" * 60)
 for r in ba_rows:

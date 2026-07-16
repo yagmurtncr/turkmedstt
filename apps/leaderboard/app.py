@@ -6,7 +6,6 @@ import gradio as gr
 import pandas as pd
 from huggingface_hub import hf_hub_download
 
-
 DATASET_ID = "turkmedstt/turkish-asr-benchmark"
 
 DISPLAY_COLUMNS = {

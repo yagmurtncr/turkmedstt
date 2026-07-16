@@ -7,9 +7,12 @@ Notlar:
 - Üretilen klasör tam bir Whisper modeli olur (~3GB safetensors + processor) -> doğrudan HF model repo.
 - CPU'da FP16 çıktı için MERGE_DTYPE=fp16 ortam değişkenini kullan.
 - transformers/peft uyumu: 4.46.x + peft 0.13.x ile test edilmiştir (5.x'te de merge genelde çalışır)."""
-import sys, os, torch
-from transformers import WhisperForConditionalGeneration, WhisperProcessor
+import os
+import sys
+
+import torch
 from peft import PeftModel
+from transformers import WhisperForConditionalGeneration, WhisperProcessor
 
 ADAP = sys.argv[1]; OUT = sys.argv[2]; BASE = "openai/whisper-large-v3"
 os.makedirs(OUT, exist_ok=True)

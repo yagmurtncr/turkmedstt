@@ -9,7 +9,6 @@ from math import sqrt
 from pathlib import Path
 from statistics import mean, pstdev
 
-
 GENERAL_PREFIXES = {
     "commonvoice_tr_": "commonvoice_tr",
     "issai_": "issai",

@@ -4,10 +4,16 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
-from .ascs import AcousticSignal, ASCSResult, SentimentSignal, acoustic_signal, score_signals, sentiment_signal
+from .ascs import (
+    AcousticSignal,
+    ASCSResult,
+    SentimentSignal,
+    acoustic_signal,
+    score_signals,
+    sentiment_signal,
+)
 from .audio import ensure_wav_16k_mono
 from .stt_core import transcribe_audio
-
 
 DEFAULT_SENTIMENT_MODEL = "savasy/bert-base-turkish-sentiment-cased"
 DEFAULT_ACOUSTIC_MODEL = "SeaBenSea/hubert-large-turkish-speech-emotion-recognition"

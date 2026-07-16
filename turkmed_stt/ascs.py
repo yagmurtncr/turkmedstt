@@ -3,7 +3,6 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass
 from typing import Any
 
-
 NEGATIVE_HIGH_AROUSAL = {
     "angry",
     "anger",

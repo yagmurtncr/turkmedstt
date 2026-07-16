@@ -1,10 +1,14 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from pathlib import Path
 
-from .normalization import contains_medical_term, normalize_turkish_text, tokenize_chars, tokenize_words
-
+from .normalization import (
+    contains_medical_term,
+    normalize_turkish_text,
+    tokenize_chars,
+    tokenize_words,
+)
 
 DEFAULT_MEDICAL_TERMS = [
     "hipertansiyon",

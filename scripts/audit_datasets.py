@@ -10,7 +10,17 @@ Outputs:
   evidence/dataset_quality/{dataset}_audit.md
   evidence/dataset_quality/before_after.csv
 """
-import csv, json, os, pathlib, wave, random, re, unicodedata, collections, struct, math
+import collections
+import csv
+import json
+import math
+import os
+import pathlib
+import random
+import re
+import struct
+import unicodedata
+import wave
 
 REPO        = pathlib.Path(__file__).resolve().parents[1]
 CV_DIR      = pathlib.Path(os.environ.get("TURKMED_CV_DIR", REPO / "data/raw/commonvoice_tr"))
@@ -39,6 +49,7 @@ def read_wav_stats(path):
             else:
                 rms = peak = 0; sil = 0.0
             return {"ok": True, "sr": sr, "ch": ch, "dur": round(dur, 2),
+                    "rms_energy": round(rms, 1),
                     "clipped": peak >= 32700, "silence_ratio": round(sil, 3)}
     except Exception as e:
         return {"ok": False, "error": str(e)[:80]}
@@ -50,7 +61,7 @@ def text_flags(text):
     if len(t) < 3:   flags.append("very_short")
     if len(t) > 300: flags.append("very_long")
     for ph in PLACEHOLDERS:
-        if ph.lower() in t.lower(): flags.append(f"placeholder"); break
+        if ph.lower() in t.lower(): flags.append("placeholder"); break
     letters = [c for c in t if c.isalpha()]
     if letters:
         tr_ratio = sum(1 for c in letters if c in TURKISH_CHARS) / len(letters)

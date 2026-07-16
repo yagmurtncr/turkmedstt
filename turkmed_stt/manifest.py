@@ -2,11 +2,10 @@ from __future__ import annotations
 
 import csv
 import os
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from pathlib import Path
 
 from .audio import wav_duration_seconds
-
 
 AUDIO_SUFFIXES = {".wav", ".mp3", ".flac", ".ogg", ".opus", ".m4a"}
 

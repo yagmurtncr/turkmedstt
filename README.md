@@ -1,6 +1,7 @@
 # TurkMedSTT
 
 <p>
+  <img src="https://github.com/yagmurtncr/turkmedstt/actions/workflows/ci.yml/badge.svg" alt="CI" />
   <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT" />
   <img src="https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white" alt="Python 3.9+" />
   <img src="https://img.shields.io/badge/Model-Whisper%20Large%20V3-EE4C2C?logo=pytorch&logoColor=white" alt="Whisper Large V3" />

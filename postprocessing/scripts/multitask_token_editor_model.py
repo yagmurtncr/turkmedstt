@@ -6,7 +6,7 @@ from dataclasses import dataclass
 
 import torch
 from torch import nn
-from transformers import AutoConfig, AutoModel, PreTrainedModel, PretrainedConfig
+from transformers import AutoConfig, AutoModel, PretrainedConfig, PreTrainedModel
 from transformers.utils import ModelOutput
 
 
