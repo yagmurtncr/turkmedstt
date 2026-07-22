@@ -11,98 +11,92 @@
 > **Turkish general & medical automatic speech recognition (ASR).** Two Whisper Large V3
 > models fine-tuned with LoRA, a 20-model benchmark under a shared evaluation protocol,
 > an AcoSemantic semantic-preservation metric, and an ASR readability post-processor.
-> *Full documentation below is in Turkish (graduation thesis).*
 
-TurkMedSTT, Türkçe otomatik konuşma tanıma sistemlerini genel ve tıbbi alanlarda
-inceleyen bir bitirme projesidir. Projede Whisper Large V3 tabanlı iki model
-geliştirilmiş, 20 açık ASR modeli ortak bir değerlendirme protokolüyle
-karşılaştırılmış ve sözcük/karakter hatalarına ek olarak anlamsal korunumu
-inceleyen AcoSemantic değerlendirmesi uygulanmıştır.
+TurkMedSTT is a graduation project that studies Turkish automatic speech recognition
+across both general and medical domains. It develops two Whisper Large V3–based models,
+compares 20 open ASR models under a shared evaluation protocol, and — beyond word/character
+error rates — applies an **AcoSemantic** evaluation that measures semantic and affective
+preservation of ASR output.
 
-## Proje Ekibi
+## Team
 
-- Muhammed Kumcu - [@muhammedkumcu](https://github.com/muhammedkumcu)
-- Nur Yağmur Tuncer - [@yagmurtncr](https://github.com/yagmurtncr)
+- Muhammed Kumcu — [@muhammedkumcu](https://github.com/muhammedkumcu)
+- Nur Yağmur Tuncer — [@yagmurtncr](https://github.com/yagmurtncr)
 
-Danışman: Doç. Dr. Ayşe Berna Altınel Girgin
+Advisor: Assoc. Prof. Dr. Ayşe Berna Altınel Girgin
 
-## Başlıca Çıktılar
+## Key Deliverables
 
-- **M1 Genel Türkçe modeli:** Genel Türkçe verileriyle LoRA ince ayarı
-- **M2 Tıbbi Türkçe modeli:** M1 üzerine genel ve tıbbi verilerle ikinci aşama LoRA
-  ince ayarı
-- **medv3 veri kümesi:** 3.236 Türkçe sentetik tıbbi konuşma kaydı
-- **Genel Türkçe benchmark:** 20 model, 1.060 klip ve 21.200 model-klip sonucu
-- **AcoSemantic değerlendirmesi:** ASR çıktılarında anlamsal ve duygusal korunumu
-  inceleyen tamamlayıcı metrikler
-- **ASR okunabilirlik post-processor:** ASR sonrasında casing, noktalama ve
-  güvenilir kelime düzeltmeleri uygulayan V1 General ve V2 Medical modelleri
-- **Demo ve leaderboard:** Modellerin denenebildiği ve sonuçların filtrelenebildiği
-  Hugging Face Space uygulamaları
+- **M1 — General Turkish model:** LoRA fine-tuning on general Turkish data
+- **M2 — Medical Turkish model:** a second-stage LoRA fine-tune on top of M1 using both
+  general and medical data
+- **medv3 dataset:** 3,236 synthetic Turkish medical speech recordings
+- **General Turkish benchmark:** 20 models, 1,060 clips, and 21,200 model–clip results
+- **AcoSemantic evaluation:** complementary metrics measuring semantic and affective
+  preservation in ASR output
+- **ASR readability post-processor:** V1 General and V2 Medical models that apply casing,
+  punctuation and confident word corrections after ASR
+- **Demo & leaderboard:** Hugging Face Space apps to try the models and filter the results
 
-## Öne Çıkan Sonuçlar
+## Highlight Results
 
-Bağımsız 320 kliplik genel Türkçe değerlendirmesinde M1, temel modele göre WER'i
-0,1213'ten 0,0792'ye, CER'i 0,0546'dan 0,0226'ya düşürmüştür. Bu değerler sırasıyla
-%34,7 WER ve %58,6 CER göreli iyileşmesine karşılık gelir. M2 bu genel dil
-kazanımlarını korumuştur.
+On an independent 320-clip general Turkish evaluation, M1 reduced WER from 0.1213 to 0.0792
+and CER from 0.0546 to 0.0226 versus the base model — a relative improvement of **34.7% WER**
+and **58.6% CER**. M2 preserved these general-language gains.
 
-Eğitim cümlelerinden farklı 516 gerçek konuşma kaydından oluşan zor tıbbi terim
-testinde M2, üç konuşmacının tamamında temel modelden daha düşük WER üretmiştir.
-Birleştirilmiş eşleştirilmiş bootstrap analizinde M0-M2 WER farkı 0,0203,
-%95 güven aralığı [0,0122; 0,0284] ve p<0,0001'dir.
+On a hard medical-term test of 516 real speech recordings (distinct from the training
+sentences), M2 produced lower WER than the base model for all three speakers. In the pooled
+paired bootstrap analysis, the M0–M2 WER gap is 0.0203, with a 95% confidence interval of
+[0.0122, 0.0284] and p < 0.0001.
 
-Ayrıntılı tablolar ve değerlendirme sınırları için [Sonuçlar](docs/RESULTS.md)
-belgesine bakınız.
+See [Results](docs/RESULTS.md) for detailed tables and evaluation caveats.
 
-## Hugging Face Yayınları
+## Hugging Face Releases
 
-- [TurkMedSTT organizasyonu](https://huggingface.co/turkmedstt)
-- [M1 - Genel Türkçe model](https://huggingface.co/turkmedstt/whisper-large-v3-turkish-general)
-- [M2 - Tıbbi Türkçe model](https://huggingface.co/turkmedstt/whisper-large-v3-turkish-medical)
-- [medv3 tıbbi veri kümesi](https://huggingface.co/datasets/turkmedstt/medv3-turkish-medical-asr)
-- [Genel Türkçe benchmark verileri](https://huggingface.co/datasets/turkmedstt/turkish-asr-benchmark)
+- [TurkMedSTT organization](https://huggingface.co/turkmedstt)
+- [M1 — General Turkish model](https://huggingface.co/turkmedstt/whisper-large-v3-turkish-general)
+- [M2 — Medical Turkish model](https://huggingface.co/turkmedstt/whisper-large-v3-turkish-medical)
+- [medv3 medical dataset](https://huggingface.co/datasets/turkmedstt/medv3-turkish-medical-asr)
+- [General Turkish benchmark data](https://huggingface.co/datasets/turkmedstt/turkish-asr-benchmark)
 - [ASR demo](https://huggingface.co/spaces/turkmedstt/turkmedstt-demo)
-- [İnteraktif leaderboard](https://huggingface.co/spaces/turkmedstt/turkish-asr-leaderboard)
-- [V1 Genel Türkçe post-processor](https://huggingface.co/turkmedstt/turkish-asr-readability-postprocessor-v1)
-- [V2 Sağlık post-processor](https://huggingface.co/turkmedstt/turkish-medical-asr-readability-postprocessor-v2)
+- [Interactive leaderboard](https://huggingface.co/spaces/turkmedstt/turkish-asr-leaderboard)
+- [V1 General Turkish post-processor](https://huggingface.co/turkmedstt/turkish-asr-readability-postprocessor-v1)
+- [V2 Medical post-processor](https://huggingface.co/turkmedstt/turkish-medical-asr-readability-postprocessor-v2)
 
-Model ağırlıkları, ses kayıtları ve yayımlanmış veri dosyaları GitHub deposunu
-gereksiz büyütmemek için burada tekrar tutulmamaktadır. Bunlara yukarıdaki
-Hugging Face bağlantılarından erişilebilir.
+Model weights, audio recordings and published data files are **not** duplicated here to keep
+the repository lean — access them via the Hugging Face links above.
 
-## Depo Yapısı
+## Repository Structure
 
 ```text
-apps/                 Hugging Face demo ve leaderboard uygulamaları
-configs/              Nihai benchmark model listesi
-docs/figures/         Sistem diyagramları ve temel sonuç grafikleri
-docs/thesis/          Nihai bitirme raporu (DOCX ve PDF)
-docs/presentation/    Proje sunumu (PPTX)
-results/              Benchmark, ince ayar ve gerçek konuşma sonuç özetleri
-scripts/              Veri hazırlama, eğitim, değerlendirme ve yayın betikleri
-postprocessing/       Türkçe ASR okunabilirlik son-işleme modeli ve sonuçları
-static/               Yerel FastAPI arayüzünün statik dosyaları
-turkmed_stt/          Ana Python paketi
+apps/                 Hugging Face demo and leaderboard apps
+configs/              Final benchmark model list
+docs/figures/         System diagrams and key result charts
+docs/thesis/          Final graduation report (DOCX and PDF)
+docs/presentation/    Project presentation (PPTX)
+results/              Benchmark, fine-tuning and real-speech result summaries
+scripts/              Data preparation, training, evaluation and release scripts
+postprocessing/       Turkish ASR readability post-processing model and results
+static/               Static files for the local FastAPI interface
+turkmed_stt/          Main Python package
 ```
 
-## Okunabilirlik Son-İşleme
+## Readability Post-Processing
 
-`postprocessing/` modülü, ham ASR çıktısını serbestçe yeniden yazmadan daha
-okunabilir hale getiren tek-checkpoint çok görevli token editörünü içerir.
+The `postprocessing/` module contains a single-checkpoint multi-task token editor that makes
+raw ASR output more readable without freely rewriting it.
 
-Genel Türkçe V1, test WER değerini `0.06179` seviyesinden `0.04277` seviyesine
-düşürmüştür. Sağlık alanı V2 kontrollü sağlık metni bozulmalarında WER değerini
-`0.31106` seviyesinden `0.18352` seviyesine düşürmüştür. V2 henüz gerçek sağlık
-ASR çıktıları üzerinde doğrulanmamıştır.
+General Turkish V1 lowered the test WER from `0.06179` to `0.04277`. Medical V2 lowered WER
+from `0.31106` to `0.18352` on controlled medical-text corruptions. V2 has **not** yet been
+validated on real medical ASR output.
 
-Ayrıntılar için [post-processing README](postprocessing/README.md) ve
-[nihai sonuçlar](postprocessing/reports/RESULTS.md) dosyalarına bakınız.
+See the [post-processing README](postprocessing/README.md) and the
+[final results](postprocessing/reports/RESULTS.md) for details.
 
-## Yerel Kurulum
+## Local Setup
 
-Python 3.9 veya daha yeni bir sürüm önerilir. GPU ile değerlendirme ve eğitim
-için CUDA uyumlu PyTorch kurulumu gereklidir.
+Python 3.9 or newer is recommended. GPU evaluation and training require a CUDA-compatible
+PyTorch installation.
 
 ```powershell
 python -m venv .venv
@@ -111,44 +105,43 @@ python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-Yerel FastAPI uygulaması:
+Local FastAPI app:
 
 ```powershell
 uvicorn turkmed_stt.app:app --reload
 ```
 
-Hugging Face demo uygulaması:
+Hugging Face demo app:
 
 ```powershell
 pip install -r apps/demo/requirements.txt
 python apps/demo/app.py
 ```
 
-Benchmark betikleri yerel ses dosyalarını içeren bir manifest bekler. Sesler bu
-depoda bulunmadığından manifest yollarının kullanıcının veri konumuna göre
-ayarlanması gerekir. Komut örnekleri ve yöntem notları
-[Yeniden Üretim](docs/REPRODUCIBILITY.md) belgesindedir.
+The benchmark scripts expect a manifest that points to local audio files. Since the audio is
+not included in this repository, adjust the manifest paths to your own data location. Command
+examples and methodology notes are in [Reproducibility](docs/REPRODUCIBILITY.md).
 
-## Depoya Dahil Edilmeyenler
+## Not Included in the Repository
 
-- Ham ve işlenmiş ses kayıtları
-- Whisper temel modeli, LoRA adapterleri ve birleştirilmiş model ağırlıkları
-- Kişisel bilgiler, erişim anahtarları ve yerel makineye özgü dosyalar
-- Ara raporlar, geçici deney çıktıları, önbellekler ve yinelenen belgeler
+- Raw and processed audio recordings
+- The Whisper base model, LoRA adapters and merged model weights
+- Personal information, access keys and machine-specific files
+- Intermediate reports, temporary experiment outputs, caches and duplicate documents
 
-## Etik ve Kullanım Sınırı
+## Ethics & Scope of Use
 
-Bu çalışma araştırma ve eğitim amaçlıdır. Modeller tıbbi cihaz değildir; klinik
-karar verme, tanı veya tedavi amacıyla doğrulanmadan kullanılmamalıdır. ASR
-çıktıları özellikle ilaç adı, doz, sayı ve özel tıbbi terimler bakımından insan
-tarafından kontrol edilmelidir.
+This work is for research and educational purposes. The models are **not** a medical device
+and must not be used for clinical decision-making, diagnosis or treatment without validation.
+ASR output should be reviewed by a human, especially for drug names, dosages, numbers and
+specialized medical terms.
 
-## Lisans ve Atıf
+## License & Citation
 
-Kaynak kod MIT License ile sunulmaktadır. Model ve veri kümelerinin
-lisansları ilgili Hugging Face sayfalarında belirtilmiştir. Akademik kullanımda
-[`CITATION.cff`](CITATION.cff) dosyasındaki bilgileri kullanınız.
+The source code is released under the MIT License. Model and dataset licenses are stated on
+their respective Hugging Face pages. For academic use, please cite the information in
+[`CITATION.cff`](CITATION.cff).
 
-Bu birleşik depo, temel TurkMedSTT çalışmasını
-[`muhammedkumcu/turkmedstt`](https://github.com/muhammedkumcu/turkmedstt)
-deposundan koruyarak okunabilirlik post-processing modülüyle genişletir.
+This consolidated repository preserves the core TurkMedSTT work from
+[`muhammedkumcu/turkmedstt`](https://github.com/muhammedkumcu/turkmedstt) and extends it with
+the readability post-processing module.
