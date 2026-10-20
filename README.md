@@ -51,6 +51,22 @@ paired bootstrap analysis, the M0–M2 WER gap is 0.0203, with a 95% confidence 
 
 See [Results](docs/RESULTS.md) for detailed tables and evaluation caveats.
 
+### Independent benchmark: Turkish ASR Leaderboard
+
+On [TurkASR-Bench](https://huggingface.co/datasets/yagmurtuncer/turkasr-bench) (5,200 utterances, 743 from each of 7 Turkish
+sources: read speech, lectures, broadcast news, YouTube and spontaneous dialogue), **M1 ranks 1st of 19 open models** on the
+[Turkish ASR Leaderboard](https://huggingface.co/spaces/yagmurtuncer/turkish-asr-leaderboard):
+
+| Model | WER (%) | CER (%) |
+|---|---|---|
+| **M1 — whisper-large-v3-turkish-general** | **12.39** | **5.79** |
+| Whisper large-v3 | 12.83 | 7.04 |
+| Whisper large-v3-turbo | 12.92 | 6.91 |
+
+Error rates, lower is better; numbers spelled out on both sides. The gap to Whisper large-v3 is statistically significant
+(paired bootstrap over utterances, B = 2,000; 95% CI of the WER difference: −0.78 to −0.07 points). Caveat: one of the seven
+sources is Common Voice, which may overlap with M1's training data.
+
 ## Hugging Face Releases
 
 - [TurkMedSTT organization](https://huggingface.co/turkmedstt)
